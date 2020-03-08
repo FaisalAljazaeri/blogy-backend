@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const indexRoute = require("./app//routes/index");
+const indexRouter = require("./app/routes/index");
+const articlesRouter = require("./app/routes/article");
 
 // Require DB Config File
 const db = require("./config/db");
@@ -14,7 +15,8 @@ mongoose.connection.once("open", () => {
 
 app.use(express.json());
 
-app.use("/", indexRoute);
+app.use("/", indexRouter);
+app.use("/api/articles", articlesRouter);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
