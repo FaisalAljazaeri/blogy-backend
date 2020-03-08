@@ -29,6 +29,11 @@ router.get("/", (req, res) => {
  * @desc    Create a new article
  * @access  Public
  */
+router.post("/", (req, res) => {
+    Article.create(req.body.article)
+        .then(article => res.status(201).json({ article }))
+        .catch(err => res.status(400).json({ err }));
+});
 
 /**
  * @method PATCH
