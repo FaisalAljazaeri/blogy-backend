@@ -21,6 +21,22 @@ router.get("/", (req, res) => {
  * @desc    Get an article by id
  * @access  Public
  */
+router.get("/:id", (req, res) => {
+    Article.findById(req.params.id)
+        .then(article => {
+            if (article) {
+                return res.status(200).json({ article });
+            }
+
+            return res.status(404).json({
+                error: {
+                    name: "DocumentNotFound",
+                    message: "The provided Id doesn't match any documents"
+                }
+            });
+        })
+        .catch(err => res.status(400).json({ err }));
+});
 
 /**
  * @method POST
