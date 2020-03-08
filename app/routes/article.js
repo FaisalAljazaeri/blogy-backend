@@ -66,4 +66,21 @@ router.post("/", (req, res) => {
  * @desc    Delete an article by id
  * @access  Public
  */
+router.delete("/:id", (req, res) => {
+    Article.findById(req.params.id)
+        .then(article => {
+            if (article) {
+                return article.remove();
+            }
+
+            return res.status(404).json({
+                error: {
+                    name: "DocumentNotFound",
+                    message: "The provided Id doesn't match any documents"
+                }
+            });
+        })
+        .then(() => res.status(204).end())
+        .catch(err => res.status(400).json({ err }));
+});
 module.exports = router;
